@@ -6,6 +6,11 @@
 const {TEXT} = require('../constants/fields')
 const {createField} = require('../utils')
 
-const Text = (params, validators = []) => createField(TEXT, params, validators)
-
-module.exports = Text
+/**
+ * Text Field
+ *
+ * @param params
+ * @param validators
+ * @constructor
+ */
+module.exports = (params, validators = []) => createField(TEXT, params, validators)

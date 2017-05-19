@@ -2,68 +2,41 @@
  * Created by jakubchadim on 29.03.17.
  */
 
-const {commonValidator} = require('../index')
-const {VALIDATOR} = require('./constants/internal')
-const {mapObject} = require('./utils')
+const {createForm, Fields, Validators} = require('../index')
 
-class Form {
+const ERROR_MESSAGES = {
+  REQUIRED: 'Reqired field'
+}
+const MIN_USER_NAME_LENGTH = 3
 
-  constructor (fields) {
-    this._fields = fields
-  }
+const userName = Fields.Text({
+  label: 'Username',
+  placeholder: 'Peter'
+}, [
+  Validators.isRequired(ERROR_MESSAGES.REQUIRED),
+  Validators.minLength(`Minimal length is ${MIN_USER_NAME_LENGTH}`, MIN_USER_NAME_LENGTH)
+])
 
-  /**
-   * Fields
-   *
-   * @return {Object}
-   */
-  fields = _ => this._fields
+const password = Fields.Text({
+  label: 'Password'
+}, [
+  Validators.isRequired(ERROR_MESSAGES.REQUIRED)
+])
 
-  /**
-   * Validate values
-   *
-   * @param {object} values
-   * @return {Boolean}
-   */
-  validate (values) {
-    const errors = this.errors(values)
+const send = Fields.Text({
+  label: 'Send'
+})
 
-    return !!Object.keys(errors).length
-  }
+const Form = createForm({
+  userName,
+  password,
+  send
+})
 
-  /**
-   * Validate values and return errors
-   *
-   * @param {object} values
-   * @return {Object}
-   */
-  errors (values) {
-    let errors = {}
-
-    Object.keys(this._fields).forEach(fieldName => {
-      const field = this._fields[fieldName]
-      const value = typeof values === 'object' ? values[fieldName] : null
-
-      const validator = field[VALIDATOR] || commonValidator
-
-      const fieldErrors = validator(field, value, values)
-
-      if (fieldErrors.length) {
-        errors[fieldName] = fieldErrors
-      }
-    })
-
-    return errors
-  }
-
+const values = {
+  userName: '',
+  password: 'mocha'
 }
 
-const createForm = fields => {
-  if (typeof fields !== 'object') {
-    throw new Error('Fields has to be object')
-  }
-
-  return new Form(fields)
-}
-
-module.exports = createForm
+console.log(Form.isValid(values))
+console.log(Form.getErrors(values))

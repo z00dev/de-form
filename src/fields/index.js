@@ -6,6 +6,10 @@
 const Text = require('./text')
 const ArrayOf = require('./arrayOf')
 
+/**
+ *
+ * @type {{Text: Text, ArrayOf: ArrayOf}}
+ */
 module.exports = {
   Text,
   ArrayOf

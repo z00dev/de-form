@@ -9,6 +9,11 @@ const {createField} = require('../utils')
 
 const validator = (field, value, values) => field[FIELD_VALIDATIONS].map(validator => validator(value, values)).filter(e => e)
 
-const ArrayOf = (params, validators = []) => createField(ARRAY_OF, params, validators, {[VALIDATOR]: validator})
-
-module.exports = ArrayOf
+/**
+ * Array of fields
+ *
+ * @param params
+ * @param validators
+ * @constructor
+ */
+module.exports = (params, validators = []) => createField(ARRAY_OF, params, validators, {[VALIDATOR]: validator})

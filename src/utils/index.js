@@ -7,7 +7,7 @@ const {TYPE, FIELD_VALIDATIONS} = require('../constants/internal')
 
 const createField = (type, params, validations = [], internal = {}) => Object.assign({}, params, {[FIELD_VALIDATIONS]: validations}, {[TYPE]: type}, internal)
 
-const createValidation = (message, validate) => (...args) => validate(...args) ? message : null
+const createValidation = (message, isValid) => (...args) => isValid(...args) ? null : message
 
 const commonValidator = (field, value, values) => field[FIELD_VALIDATIONS].map(validator => validator(value, values)).filter(e => e)
 

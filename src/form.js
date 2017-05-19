@@ -9,15 +9,8 @@ const {mapObject} = require('./utils')
 class Form {
 
   constructor (fields) {
-    this._fields = fields
+    this.fields = fields
   }
-
-  /**
-   * Fields
-   *
-   * @return {Object}
-   */
-  fields = _ => this._fields
 
   /**
    * Validate values
@@ -25,10 +18,10 @@ class Form {
    * @param {object} values
    * @return {Boolean}
    */
-  validate (values) {
-    const errors = this.errors(values)
+  isValid (values) {
+    const errors = this.getErrors(values)
 
-    return !!Object.keys(errors).length
+    return !Object.keys(errors).length
   }
 
   /**
@@ -37,11 +30,10 @@ class Form {
    * @param {object} values
    * @return {Object}
    */
-  errors (values) {
+  getErrors (values) {
     let errors = {}
 
-    mapObject(this._fields, (field, fieldName) => {
-      const field = this._fields[fieldName]
+    mapObject(this.fields, (field, fieldName) => {
       const value = typeof values === 'object' ? values[fieldName] : null
 
       const validator = field[VALIDATOR] || commonValidator
@@ -58,6 +50,12 @@ class Form {
 
 }
 
+/**
+ * Form factory
+ *
+ * @param {Object} fields
+ * @return {Form}
+ */
 const createForm = fields => {
   if (typeof fields !== 'object') {
     throw new Error('Fields has to be object')

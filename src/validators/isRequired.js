@@ -9,6 +9,6 @@ const validate = (value) => {
   return value
 }
 
-const required = (message) => createValidation(message, validate)
+const isRequired = (message) => createValidation(message, validate)
 
-module.exports = required
+module.exports = isRequired
