@@ -9,6 +9,8 @@ const ERROR_MESSAGES = {
 }
 const MIN_USER_NAME_LENGTH = 3
 
+// ===========  Fields declaration  ============ //
+
 const userName = Fields.Text({
   label: 'Username',
   placeholder: 'Peter'
@@ -27,11 +29,15 @@ const send = Fields.Text({
   label: 'Send'
 })
 
+// =========== Create form  ============ //
+
 const Form = createForm({
   userName,
   password,
   send
 })
+
+// ===========  Validate  ============ //
 
 const values = {
   userName: '',
