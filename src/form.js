@@ -47,7 +47,7 @@ class Form {
       let fieldErrors = []
 
       if (field[REQUIRED]) {
-        const requiredValidator = Validators.isRequired(field[REQUIRED_MESSAGE] || 'Required field')
+        const requiredValidator = Validators.isFilled(field[REQUIRED_MESSAGE] || 'Required field')
         const isNotFilled = requiredValidator(value)
         if (isNotFilled) {
           fieldErrors.push(isNotFilled)

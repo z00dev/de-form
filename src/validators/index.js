@@ -1,6 +1,6 @@
 'use strict'
 
-const isRequired = require('./isRequired')
+const isFilled = require('./isFilled')
 const minLength = require('./minLength')
 const maxLength = require('./maxLength')
 const length = require('./length')
@@ -11,7 +11,7 @@ const email = require('./email')
  * @type {{isRequired: isRequired, minLength: minLength}}
  */
 module.exports = {
-  isRequired,
+  isFilled,
   minLength,
   maxLength,
   length,

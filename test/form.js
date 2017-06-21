@@ -1,6 +1,4 @@
-/**
- * Created by jakubchadim on 29.03.17.
- */
+'use strict'
 
 const {createForm, Fields, Validators} = require('../index')
 
@@ -11,41 +9,55 @@ const MIN_USER_NAME_LENGTH = 3
 
 // ===========  Fields declaration  ============ //
 
-const userName = Fields.Text({
-  label: 'Username',
+const name = Fields.Text({
+  label: 'Name',
   placeholder: 'Peter'
 }, [
   Validators.minLength(`Minimal length is ${MIN_USER_NAME_LENGTH}`, MIN_USER_NAME_LENGTH)
+]).isRequired()
+
+const age = Fields.Text({
+  label: 'Age'
+}, [
+  Validators.Number('Age must be number')
 ]).isRequired()
 
 const password = Fields.Text({
   label: 'Password'
 }).isRequired(ERROR_MESSAGES.REQUIRED)
 
-const children = Fields.
+const child = Fields.Shape({
+  name,
+  age
+})
 
-const childrens = Fields.ArrayOf(userName).isRequired()
+const children = Fields.ArrayOf(child)
 
 const send = Fields.Submit({
-  label: 'Send'
+  label: 'Save'
 })
 
 // =========== Create form  ============ //
 
 const Form = createForm({
-  userName,
+  name,
+  age,
   password,
-  childrens,
+  children,
   send
 })
 
 // ===========  Validate  ============ //
 
 const values = {
-  userName: '',
-  password: '',
+  userName: 'Peter',
+  age: 32,
+  password: 'pw',
   childrens: [
-    '' // This should be validated
+    {
+      name: 'Kid',
+      age: 7
+    }
   ]
 }
 

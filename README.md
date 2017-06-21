@@ -3,58 +3,74 @@ Create form by definitions
 
 ### Example
 ```javascript
-import Form, {Fields, Validators} from 'de-form'
+import {createForm, Fields, Validators} from 'de-form'
 
-const customValidator = (value, args, values) => {
-  return value === args
+const ERROR_MESSAGES = {
+  REQUIRED: 'Reqired field'
 }
+const MIN_USER_NAME_LENGTH = 3
 
-const signForm = new Form({
-  user: Fields.TextField({
-    label: 'User name',
-    placeholder: 'Enter name'
-  }, [
-    Validators.MinLength(3, 'Min. length 3'),
-    Validators.Pattern('.*[0-9].*', 'Wrong username')
-  ]),
-  password: Fields.Password({
-      label: 'Password'
-    }, [
-      Validators.MinLength(4, 'Min. length 4'),
-      Validators.Custom('pw123', 'Wrong data', customValidator),
-      Validators.Required('Required field'),
-    ]),
-  send: Fields.Submit({
-      label: 'Log in'
-    }),
+// ===========  Fields declaration  ============ //
+
+const name = Fields.Text({
+  label: 'Name',
+  placeholder: 'Peter'
+}, [
+  Validators.minLength(`Minimal length is ${MIN_USER_NAME_LENGTH}`, MIN_USER_NAME_LENGTH)
+]).isRequired()
+
+const age = Fields.Text({
+  label: 'Age'
+}, [
+  Validators.Number('Age must be number')
+]).isRequired()
+
+const password = Fields.Text({
+  label: 'Password'
+}).isRequired(ERROR_MESSAGES.REQUIRED)
+
+const child = Fields.Shape({
+  name,
+  age
+})
+
+const children = Fields.ArrayOf(child)
+
+const send = Fields.Submit({
+  label: 'Save'
+})
+
+// =========== Create form  ============ //
+
+const Form = createForm({
+  name,
+  age,
+  password,
+  children,
+  send
 })
 ```
 
 Now we can call many actions on form object
 
 ```javascript
-// Map of fields
-const {user, password} = signForm.fields
+// ===========  Validate  ============ //
 
-user.onChange('Some value')
+const values = {
+  userName: 'Peter',
+  age: 32,
+  password: 'pw',
+  childrens: [
+    {
+      name: 'Kid',
+      age: 7
+    }
+  ]
+}
 
-// Array of errors
-signForm.errors
 
-// Bool property
-signForm.isValid
-
-// Validate fields
-signForm.validate()
-
-// Submit form
-signForm.submit()
-
-// Submit form without validation
-signForm.submit(true)
-
-// Clear form values
-signForm.reset()
+console.log(Form.isValid(values))
+console.log(Form.getErrors(values))
 ```
 
 ## Fields
@@ -84,7 +100,17 @@ const validations = [
 Fields.Text(null, validations)
 ```
 
-##### Custom validation
+##### email(errorMessage)
+
+##### isFilled(errorMessage)
+
+##### length(errorMessage, length)
+
+##### minLength(errorMessage, minLength)
+
+##### maxLength(errorMessage, maxLength)
+
+#### Custom validation
 
 You can also write custom validations. Validation function returns error message or null.
 
@@ -100,6 +126,10 @@ Fields.Text(null, [
 
 ### Field Types
 
+##### ArrayOf(field)
+
+##### Shape({fields})
+
 ##### Text([props, validations])
 
 ##### Textarea([props, validations])
@@ -107,3 +137,23 @@ Fields.Text(null, [
 ##### Email([props, validations])
 
 ##### Password([props, validations])
+
+##### Checkbox([props, validations])
+
+##### CheckboxList([props, validations])
+
+##### Select([props, validations])
+
+##### MultiSelect([props, validations])
+
+##### Upload([props, validations])
+
+##### MultiUpload([props, validations])
+
+##### RadioList([props, validations])
+
+##### Submit([props, validations])
+
+##### Button([props, validations])
+
+##### Hidden([props, validations])

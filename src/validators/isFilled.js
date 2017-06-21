@@ -10,6 +10,6 @@ const validate = value => {
   return !!value
 }
 
-const isRequired = message => createValidation(message, validate)
+const isFilled = message => createValidation(message, validate)
 
-module.exports = isRequired
+module.exports = isFilled
