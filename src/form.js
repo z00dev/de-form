@@ -1,10 +1,9 @@
-/**
- * Created by jakubchadim on 29.03.17.
- */
+'use strict'
 
 const {commonValidator} = require('./utils')
-const {VALIDATOR} = require('./constants/internal')
+const {VALIDATOR, REQUIRED, REQUIRED_MESSAGE} = require('./constants/internal')
 const {mapObject} = require('./utils')
+const Validators = require('./validators')
 
 class Form {
 
@@ -31,14 +30,36 @@ class Form {
    * @return {Object}
    */
   getErrors (values) {
+    if (typeof values !== 'object') {
+      throw new Error(`Validation expect Object but received ${typeof values}`)
+    }
+
     let errors = {}
 
     mapObject(this.fields, (field, fieldName) => {
-      const value = typeof values === 'object' ? values[fieldName] : null
+      const value = values[fieldName]
+
+      if (!field[REQUIRED] && !value) {
+        // Field is empty and not required
+        return
+      }
+
+      let fieldErrors = []
+
+      if (field[REQUIRED]) {
+        const requiredValidator = Validators.isRequired(field[REQUIRED_MESSAGE] || 'Required field')
+        const isNotFilled = requiredValidator(value)
+        if (isNotFilled) {
+          fieldErrors.push(isNotFilled)
+        }
+      }
 
       const validator = field[VALIDATOR] || commonValidator
 
-      const fieldErrors = validator(field, value, values)
+      fieldErrors = [
+        ...fieldErrors,
+        ...validator(field, value, values)
+      ]
 
       if (fieldErrors.length) {
         errors[fieldName] = fieldErrors
@@ -64,4 +85,11 @@ const createForm = fields => {
   return new Form(fields)
 }
 
-module.exports = createForm
+/**
+ *
+ * @type {{createForm: Function.<Object>, Form: Form}}
+ */
+module.exports = {
+  createForm,
+  Form
+}

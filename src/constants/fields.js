@@ -1,7 +1,4 @@
-
-/**
- * Created by jakubchadim on 29.03.17.
- */
+'use strict'
 
 module.exports = {
   TEXT: 'text',
@@ -18,6 +15,6 @@ module.exports = {
   MULTI_SELECT: 'multi_select',
   SUBMIT: 'submit',
   BUTTON: 'button',
-  GROUP: 'group',
+  SHAPE: 'shape',
   ARRAY_OF: 'array_of'
 }

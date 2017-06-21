@@ -1,6 +1,6 @@
 'use strict'
 
-const {TEXT} = require('../constants/fields')
+const {HIDDEN} = require('../constants/fields')
 const {createField} = require('../utils')
 
 /**
@@ -10,4 +10,4 @@ const {createField} = require('../utils')
  * @param validators
  * @constructor
  */
-module.exports = (params, validators = []) => createField(TEXT, params, validators)
+module.exports = (params, validators = []) => createField(HIDDEN, params, validators)

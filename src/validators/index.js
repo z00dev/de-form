@@ -1,10 +1,10 @@
-
-/**
- * Created by jakubchadim on 29.03.17.
- */
+'use strict'
 
 const isRequired = require('./isRequired')
 const minLength = require('./minLength')
+const maxLength = require('./maxLength')
+const length = require('./length')
+const email = require('./email')
 
 /**
  *
@@ -12,5 +12,8 @@ const minLength = require('./minLength')
  */
 module.exports = {
   isRequired,
-  minLength
+  minLength,
+  maxLength,
+  length,
+  email
 }

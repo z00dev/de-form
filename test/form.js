@@ -15,17 +15,18 @@ const userName = Fields.Text({
   label: 'Username',
   placeholder: 'Peter'
 }, [
-  Validators.isRequired(ERROR_MESSAGES.REQUIRED),
   Validators.minLength(`Minimal length is ${MIN_USER_NAME_LENGTH}`, MIN_USER_NAME_LENGTH)
-])
+]).isRequired()
 
 const password = Fields.Text({
   label: 'Password'
-}, [
-  Validators.isRequired(ERROR_MESSAGES.REQUIRED)
-])
+}).isRequired(ERROR_MESSAGES.REQUIRED)
 
-const send = Fields.Text({
+const children = Fields.
+
+const childrens = Fields.ArrayOf(userName).isRequired()
+
+const send = Fields.Submit({
   label: 'Send'
 })
 
@@ -34,6 +35,7 @@ const send = Fields.Text({
 const Form = createForm({
   userName,
   password,
+  childrens,
   send
 })
 
@@ -41,7 +43,10 @@ const Form = createForm({
 
 const values = {
   userName: '',
-  password: 'mocha'
+  password: '',
+  childrens: [
+    '' // This should be validated
+  ]
 }
 
 console.log(Form.isValid(values))

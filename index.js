@@ -3,17 +3,17 @@
  * Created by jakubchadim on 29.03.17.
  */
 
-const Form = require('./src/form')
+const {createForm, Form} = require('./src/form')
 const Fields = require('./src/fields')
 const Validators = require('./src/validators')
 
 /**
  *
- * @type {{default: createForm, createForm: createForm, Fields: {Text: Text, ArrayOf: ArrayOf}, Validators: {isRequired: isRequired, minLength: minLength}}}
+ * @type {{default: Form, createForm: Function.<Object>, Fields: {ArrayOf: *, Button: *, Checkbox: *, CheckboxList: *, Email: *, Group: *, Hidden: *, MultiSelect: *, MultiUpload: *, Password: *, RadioList: *, Select: *, Submbit: *, Text: *, Textarea: *, Upload: *}, Validators: {isRequired: isRequired, minLength: minLength}}}
  */
 module.exports = {
   default: Form,
-  createForm: Form,
+  createForm: createForm,
   Fields,
   Validators
 }

@@ -1,14 +1,15 @@
-
-/**
- * Created by jakubchadim on 29.03.17.
- */
+'use strict'
 
 const {createValidation} = require('../utils')
 
-const validate = (value) => {
-  return value
+const validate = value => {
+  if (typeof value === 'object') {
+    // Array or object
+    return value.length === undefined ? !!Object.keys(value).length : !!value.length
+  }
+  return !!value
 }
 
-const isRequired = (message) => createValidation(message, validate)
+const isRequired = message => createValidation(message, validate)
 
 module.exports = isRequired

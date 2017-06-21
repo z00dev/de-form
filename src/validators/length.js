@@ -2,23 +2,23 @@
 
 const {createValidation} = require('../utils')
 
-const isValid = (minLength, value) => {
+const isValid = (_length, value) => {
   let length = 0
   if (typeof value === 'object') {
     length = Object.keys(value).length
   } else if (value) {
     length = value.length
   }
-  return length >= minLength
+  return length === _length
 }
 
 /**
- * Validate min length
+ * Validate length
  *
  * @param message
- * @param minLength
+ * @param length
  * @return {Function}
  */
-const minLength = (message, minLength) => createValidation(message, isValid.bind(null, minLength))
+const length = (message, length) => createValidation(message, isValid.bind(null, length))
 
-module.exports = minLength
+module.exports = length

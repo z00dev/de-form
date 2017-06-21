@@ -1,7 +1,4 @@
-
-/**
- * Created by jakubchadim on 29.03.17.
- */
+'use strict'
 
 const {ARRAY_OF} = require('../constants/fields')
 const {VALIDATOR, FIELD_VALIDATIONS} = require('../constants/internal')

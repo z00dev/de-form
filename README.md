@@ -56,3 +56,54 @@ signForm.submit(true)
 // Clear form values
 signForm.reset()
 ```
+
+## Fields
+
+### Props
+
+Each field has own properties. For example Label, Placeholder etc... Properties can be used in renderer.
+
+```javascript
+const props = {
+  label: 'Text field',
+  placeholder: 'Enter something...'
+}
+
+Fields.Text(props)
+```
+
+### Validations
+
+Fields can receive array of validation functions.
+
+```javascript
+const validations = [
+  Validations.minLength('Min. length is 5.', 5)
+]
+
+Fields.Text(null, validations)
+```
+
+##### Custom validation
+
+You can also write custom validations. Validation function returns error message or null.
+
+```javascript
+const customValidation = (value, values) => {
+  return value !== 'Some value' ? 'Error' : null
+}
+
+Fields.Text(null, [
+  customValidation
+])
+```
+
+### Field Types
+
+##### Text([props, validations])
+
+##### Textarea([props, validations])
+
+##### Email([props, validations])
+
+##### Password([props, validations])
