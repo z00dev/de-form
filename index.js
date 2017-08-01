@@ -6,6 +6,7 @@
 const {createForm, Form} = require('./src/form')
 const Fields = require('./src/fields')
 const Validators = require('./src/validators')
+const FIELD_TYPES = require('./src/constants/fields')
 
 /**
  *
@@ -15,5 +16,6 @@ module.exports = {
   default: Form,
   createForm: createForm,
   Fields,
-  Validators
+  Validators,
+  FIELD_TYPES
 }
