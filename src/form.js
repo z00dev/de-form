@@ -69,6 +69,15 @@ class Form {
     return errors
   }
 
+  /**
+   * Return scheme
+   *
+   * @return {Array}
+   */
+  getScheme () {
+    return Object.keys(this.fields)
+  }
+
 }
 
 /**

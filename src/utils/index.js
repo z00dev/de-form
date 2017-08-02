@@ -8,7 +8,10 @@ const createField = (type, params, validations = [], internal = {}) => {
     {
       [FIELD_VALIDATIONS]: validations,
       [TYPE]: type,
-      [REQUIRED]: false
+      [REQUIRED]: false,
+      getType () {
+        return this[TYPE]
+      }
     },
     internal
   )
